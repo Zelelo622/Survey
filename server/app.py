@@ -92,5 +92,30 @@ def create_question(name_questionnaire):
     return jsonify(questionData)
 
 
+@app.route('/question/<name_questionnaire>/<id>', methods=['PUT'])
+def update_question(name_questionnaire, id):
+    formulation = request.json['formulation']
+    id_questionnaire = db.session.query(Questionnaire).filter(
+        Questionnaire.name_questionnaire == name_questionnaire).first().id_questionnaire
+    id_question = db.session.query(Question).filter(Question.id_questionnaire == id_questionnaire).first().id_question
+    questionData = db.session.get(Question, id_question)
+    db.session.query(Question).filter(questionData.id_question == id_question).update(
+        {'formulation': formulation}
+    )
+    db.session.commit()
+    return f'Questionnaire (id: {id_questionnaire}) : Question (id: {id}) update!'
+
+
+@app.route('/question/<name_questionnaire>/<id>', methods=['DELETE'])
+def delete_question(name_questionnaire, id):
+    id_questionnaire = db.session.query(Questionnaire).filter(
+        Questionnaire.name_questionnaire == name_questionnaire).first().id_questionnaire
+    id_question = db.session.query(Question).filter(Question.id_questionnaire == id_questionnaire).first().id_question
+    questionData = db.session.get(Question, id_question)
+    db.session.delete(questionData)
+    db.session.commit()
+    return f'Questionnaire (id: {id_questionnaire}) : Question (id: {id}) deleted!'
+
+
 if __name__ == '__main__':
     app.run(debug=True)

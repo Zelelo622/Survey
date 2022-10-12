@@ -9,14 +9,14 @@
 # formulation = open('resources/voprosy.txt', 'r', encoding='utf8')
 
 
-#Заполнение таблицы question
+# Заполнение таблицы question
 # arr = [line[:len(line) - 1] for line in formulation.readlines()]
 # for i in range(1000):
 #     cur.execute(f"INSERT INTO question (formulation, id_questionnaire) VALUES "
 #                 f"('{random.choice(arr)}', {random.randint(210, 600)})")
 
 
-#Заполнение таблицы questionnaire
+# Заполнение таблицы questionnaire
 # arr = ['мужской', 'женский']
 # arrName = ['о мире', 'о жизни', 'о наболевшем']
 # for i in range(200):

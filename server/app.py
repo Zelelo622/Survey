@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-from models import Questionnaire, Question, Answer, Result
+from server.models.models import Questionnaire, Question, Answer, Result
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:zelelo@localhost/survey'
@@ -54,7 +54,6 @@ def delete_questionnaire(id):
 
 @app.route('/questionnaire/<id>', methods=['PUT'])
 def update_questionnaire(id):
-    # questionnaire = db.session.query(Questionnaire).filter_by(id=id)
     name_questionnaire = request.json['name_questionnaire']
     sex = request.json['sex']
     year_birth = request.json['year_birth']
@@ -65,5 +64,33 @@ def update_questionnaire(id):
     return f'Questionnaire (id: {id}) updated!'
 
 
+# -------------------
+
+
+@app.route('/question/<name_questionnaire>', methods=['GET'])
+def get_question(name_questionnaire):
+    id_questionnaire = db.session.query(Questionnaire).filter(
+        Questionnaire.name_questionnaire == name_questionnaire).first().id_questionnaire
+    questionData = db.session.query(Question).filter(Question.id_questionnaire == id_questionnaire).all()
+    question_list = []
+    for question in questionData:
+        curr_questionnaire = {'id_question': question.id_question,
+                              'formulation': question.formulation,
+                              'id_questionnaire': id_questionnaire}
+        question_list.append(curr_questionnaire)
+    return jsonify(question_list)
+
+
+@app.route('/question/<name_questionnaire>', methods=['POST'])
+def create_question(name_questionnaire):
+    questionData = request.get_json()
+    id_questionnaire = db.session.query(Questionnaire).filter(
+        Questionnaire.name_questionnaire == name_questionnaire).first().id_questionnaire
+    question = Question(formulation=questionData['formulation'], id_questionnaire=id_questionnaire)
+    db.session.add(question)
+    db.session.commit()
+    return jsonify(questionData)
+
+
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

@@ -8,9 +8,7 @@ db = SQLAlchemy(app)
 db.session.commit()
 
 
-@app.route('/')
-def hello():
-    return 'hey'
+# -------------------
 
 
 @app.route('/questionnaire', methods=['GET'])
@@ -67,7 +65,7 @@ def update_questionnaire(id):
 # -------------------
 
 
-@app.route('/question/<name_questionnaire>', methods=['GET'])
+@app.route('/<name_questionnaire>/questions', methods=['GET'])
 def get_question(name_questionnaire):
     id_questionnaire = db.session.query(Questionnaire).filter(
         Questionnaire.name_questionnaire == name_questionnaire).first().id_questionnaire
@@ -81,7 +79,7 @@ def get_question(name_questionnaire):
     return jsonify(question_list)
 
 
-@app.route('/question/<name_questionnaire>', methods=['POST'])
+@app.route('/<name_questionnaire>/questions', methods=['POST'])
 def create_question(name_questionnaire):
     questionData = request.get_json()
     id_questionnaire = db.session.query(Questionnaire).filter(
@@ -92,29 +90,94 @@ def create_question(name_questionnaire):
     return jsonify(questionData)
 
 
-@app.route('/question/<name_questionnaire>/<id>', methods=['PUT'])
+@app.route('/<name_questionnaire>/question/<id>', methods=['PUT'])
 def update_question(name_questionnaire, id):
     formulation = request.json['formulation']
     id_questionnaire = db.session.query(Questionnaire).filter(
         Questionnaire.name_questionnaire == name_questionnaire).first().id_questionnaire
-    id_question = db.session.query(Question).filter(Question.id_questionnaire == id_questionnaire).first().id_question
-    questionData = db.session.get(Question, id_question)
-    db.session.query(Question).filter(questionData.id_question == id_question).update(
+    # id_question = db.session.query(Question).filter(Question.id_question == id).first().id_question
+    # questionData = db.session.get(Question, id_question)
+    db.session.query(Question).filter(Question.id_question == id).update(
         {'formulation': formulation}
     )
     db.session.commit()
     return f'Questionnaire (id: {id_questionnaire}) : Question (id: {id}) update!'
 
 
-@app.route('/question/<name_questionnaire>/<id>', methods=['DELETE'])
+@app.route('/<name_questionnaire>/question/<id>', methods=['DELETE'])
 def delete_question(name_questionnaire, id):
     id_questionnaire = db.session.query(Questionnaire).filter(
         Questionnaire.name_questionnaire == name_questionnaire).first().id_questionnaire
-    id_question = db.session.query(Question).filter(Question.id_questionnaire == id_questionnaire).first().id_question
-    questionData = db.session.get(Question, id_question)
+    # id_question = db.session.query(Question).filter(Question.id_questionnaire == id_questionnaire).first().id_question
+
+    questionData = db.session.get(Question, id)
     db.session.delete(questionData)
     db.session.commit()
     return f'Questionnaire (id: {id_questionnaire}) : Question (id: {id}) deleted!'
+
+
+# -------------------
+# Answer
+
+# @app.route('/<name_questionnaire>/questions', methods=['GET'])
+# def get_question(name_questionnaire):
+#     id_questionnaire = db.session.query(Questionnaire).filter(
+#         Questionnaire.name_questionnaire == name_questionnaire).first().id_questionnaire
+#     questionData = db.session.query(Question).filter(Question.id_questionnaire == id_questionnaire).all()
+#     question_list = []
+#     for question in questionData:
+#         curr_questionnaire = {'id_question': question.id_question,
+#                               'formulation': question.formulation,
+#                               'id_questionnaire': id_questionnaire}
+#         question_list.append(curr_questionnaire)
+#     return jsonify(question_list)
+#
+#
+# @app.route('/<name_questionnaire>/questions', methods=['POST'])
+# def create_question(name_questionnaire):
+#     questionData = request.get_json()
+#     id_questionnaire = db.session.query(Questionnaire).filter(
+#         Questionnaire.name_questionnaire == name_questionnaire).first().id_questionnaire
+#     question = Question(formulation=questionData['formulation'], id_questionnaire=id_questionnaire)
+#     db.session.add(question)
+#     db.session.commit()
+#     return jsonify(questionData)
+#
+#
+# @app.route('/<name_questionnaire>/question/<id>', methods=['PUT'])
+# def update_question(name_questionnaire, id):
+#     formulation = request.json['formulation']
+#     id_questionnaire = db.session.query(Questionnaire).filter(
+#         Questionnaire.name_questionnaire == name_questionnaire).first().id_questionnaire
+#     # id_question = db.session.query(Question).filter(Question.id_question == id).first().id_question
+#     # questionData = db.session.get(Question, id_question)
+#     db.session.query(Question).filter(Question.id_question == id).update(
+#         {'formulation': formulation}
+#     )
+#     db.session.commit()
+#     return f'Questionnaire (id: {id_questionnaire}) : Question (id: {id}) update!'
+#
+#
+# @app.route('/<name_questionnaire>/question/<id>', methods=['DELETE'])
+# def delete_question(name_questionnaire, id):
+#     id_questionnaire = db.session.query(Questionnaire).filter(
+#         Questionnaire.name_questionnaire == name_questionnaire).first().id_questionnaire
+#     # id_question = db.session.query(Question).filter(Question.id_questionnaire == id_questionnaire).first().id_question
+#
+#     questionData = db.session.get(Question, id)
+#     db.session.delete(questionData)
+#     db.session.commit()
+#     return f'Questionnaire (id: {id_questionnaire}) : Question (id: {id}) deleted!'
+
+
+# @app.route('/<name_questionnaire>/<formulation>/<id>', methods=['POST'])
+# def create_answer(name_questionnaire, formulation):
+#     answerData = request.get_json()
+#     id_questionnaire = db.session.query(Questionnaire).filter(
+#         Questionnaire.name_questionnaire == name_questionnaire).first().id_questionnaire
+#     id_question = db.session.query(Question).filter(
+#         Question.formulation == formulation).first().id_question
+#     answer = Answer(answer_option=answerData['answer_option'], id_question=id_question)
 
 
 if __name__ == '__main__':

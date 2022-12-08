@@ -180,15 +180,37 @@ def delete_answer(formulation, id):
     return f'Question (id: {id_question}) : Question (id: {id}) deleted!'
 
 
-@app.route('/<name_questionnaire>/result', methods=['POST'])
-def create_result(name_questionnaire):
-    resultData = request.get_json()
-    id_questionnaire = db.session.query(Questionnaire).filter(
-        Questionnaire.name_questionnaire == name_questionnaire).first().id_questionnaire
-    result = Result(id_questionnaire=id_questionnaire)
-    db.session.add(result)
-    db.session.commit()
-    return jsonify(resultData)
+# @app.route('/<name_questionnaire>/<id_quest>/result/<id>', methods=['PUT'])
+# def create_result(name_questionnaire, id_quest, id):
+#     yes_num = request.json['yes_num']
+#     yes_num = 0
+#     id_questionnaire = db.session.query(Questionnaire).filter(
+#         Questionnaire.name_questionnaire == name_questionnaire).first().id_questionnaire
+#     id_question = db.session.query(Question).filter(Question.id_question == id_quest).first.id_question
+#     user_result = request.form['p']
+#     resultData = db.session.query(Result).filter(Result.id_questionnaire == id_questionnaire,
+#                                                  Result.id_question == id_question).all()
+#     if user_result == 'Да':
+#         curResData = {
+#             'yes_num': resultData.yes_num,
+#             'id_question': id_question,
+#         }
+#         if yes_num is None:
+#             yes_num = 0
+#         yes_num += 1
+#         db.session.query(Result).filter(Result.id_result == id).update(
+#             {'yes_num': yes_num}
+#         )
+#         db.session.commit()
+
+
+# resultData = request.get_json()
+# id_questionnaire = db.session.query(Questionnaire).filter(
+#     Questionnaire.name_questionnaire == name_questionnaire).first().id_questionnaire
+# result = Result(id_questionnaire=id_questionnaire)
+# db.session.add(result)
+# db.session.commit()
+# return jsonify(resultData)
 
 
 if __name__ == '__main__':

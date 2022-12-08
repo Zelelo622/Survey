@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from "./components/Header";
 import Questionnaire from "./pages/Questionnaire";
 import Question from "./pages/Question";
+import Home from "./pages/Home";
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
       <Header />
       <Questionnaire />
       <Question />
+      <Home />
     </div>
   );
 }

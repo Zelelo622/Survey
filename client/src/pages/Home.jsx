@@ -1,12 +1,14 @@
-import React, { Component } from "react";
-import { Container } from "react-bootstrap";
+import { React, Component } from "react";
+import { Routes, Route } from "react-router-dom";
+
+import PageHome from '../components/Home/PageHome';
 
 export default class Home extends Component {
   render() {
     return (
-      <Container>
-        <div>Home</div>
-      </Container>
+      <Routes>
+        <Route path="/home" exact element={<PageHome />} />
+      </Routes>
     );
   }
 }

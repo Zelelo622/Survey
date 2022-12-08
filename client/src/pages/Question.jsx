@@ -22,10 +22,12 @@ export default class Question extends Component {
         />
         <Route
           path="/:name_questionnaire/add-question"
+          exact
           element={<CreateQuestionElement />}
         />
         <Route
           path="/:name_questionnaire/update-question/:id"
+          exact
           element={<UpdateQuestionElement />}
         />
       </Routes>

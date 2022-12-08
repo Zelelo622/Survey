@@ -6,7 +6,7 @@ import CreateQuestionnaireElement from "../components/Questionnaire_comp/CreateQ
 import ViewQuestionnaireElement from "../components/Questionnaire_comp/ViewQuestionnaireElement";
 import UpdateQuestionnaireElement from "../components/Questionnaire_comp/UpdateQuestionnaireElement";
 
-export default class Client extends Component {
+export default class Questionnaire extends Component {
   render() {
     return (
       <Routes>

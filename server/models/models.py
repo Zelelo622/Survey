@@ -31,10 +31,12 @@ class Result(Base):
     __tablename__ = 'result'
 
     id_result = Column(Integer, Identity(always=True, start=1, increment=1, minvalue=1, maxvalue=2147483647, cycle=False, cache=1), primary_key=True)
-    id_questionnaire = Column(ForeignKey('questionnaire.id_questionnaire'), nullable=False)
+    yes_num = Column(Integer, nullable=True)
+    no_num = Column(Integer, nullable=True)
+    dknow_num = Column(Integer, nullable=True)
+    id_questionnaire = Column(ForeignKey('questionnaire.id_questionnaire'), nullable=True)
 
     questionnaire = relationship('Questionnaire', back_populates='result')
-    answer = relationship('Answer', back_populates='result')
 
 
 class Answer(Base):
@@ -43,7 +45,5 @@ class Answer(Base):
     id_answer = Column(Integer, Identity(always=True, start=1, increment=1, minvalue=1, maxvalue=2147483647, cycle=False, cache=1), primary_key=True)
     answer_option = Column(String(100))
     id_question = Column(ForeignKey('question.id_question'))
-    id_result = Column(ForeignKey('result.id_result'))
 
     question = relationship('Question', back_populates='answer')
-    result = relationship('Result', back_populates='answer')

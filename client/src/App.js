@@ -3,6 +3,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from "./components/Header";
 import Questionnaire from "./pages/Questionnaire";
+import Question from "./pages/Question";
 
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
     <div>
       <Header />
       <Questionnaire />
+      <Question />
     </div>
   );
 }

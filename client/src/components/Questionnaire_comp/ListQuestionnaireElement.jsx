@@ -3,9 +3,9 @@ import QuestionnaireService from "../../services/QuestionnaireService";
 import { Container } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-import withNavigateHook from "./withNavigateHook";
+import withNavigateHook from "../withNavigateHook";
 
-export class ListQuestionnaireElement extends Component {
+class ListQuestionnaireElement extends Component {
   constructor(props) {
     super(props);
 
@@ -37,6 +37,7 @@ export class ListQuestionnaireElement extends Component {
   viewQuestionnaire(id) {
     this.props.navigation(`/view-questionnaire/${id}`);
   }
+  
   editQuestionnaire(id) {
     this.props.navigation(`/update-questionnaire/${id}`);
   }

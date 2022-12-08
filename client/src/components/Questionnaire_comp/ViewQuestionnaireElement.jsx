@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import QuestionnaireService from "../../services/QuestionnaireService";
 
-import withNavigateHook from "./withNavigateHook";
+import withNavigateHook from "../withNavigateHook";
  
 class ViewQuestionnaireComponent extends Component {
     constructor(props) {

@@ -15,6 +15,7 @@ export default class HeaderTest extends Component {
                             <Nav className="me-auto">
                                 <Nav.Link href="/">Home</Nav.Link>
                                 <Nav.Link href="/questionnaire">Questionnaire</Nav.Link>
+                                <Nav.Link href="/question">Question</Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
                     </Container>

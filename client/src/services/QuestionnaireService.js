@@ -8,20 +8,20 @@ class QuestionnaireService {
         return axios.get(QUESTIONNAIRE_API_BASE_URL);
     }
 
-    createQuestionnaire(client) {
-        return axios.post(QUESTIONNAIRE_API_BASE_URL, client);
+    createQuestionnaire(questionnaire) {
+        return axios.post(QUESTIONNAIRE_API_BASE_URL, questionnaire);
     }
 
-    getQuestionnaireById(clientId) {
-        return axios.get(QUESTIONNAIRE_API_BASE_URL + '/' + clientId);
+    getQuestionnaireById(questionnaireId) {
+        return axios.get(QUESTIONNAIRE_API_BASE_URL + '/' + questionnaireId);
     }
 
-    updateQuestionnaire(client, clientId) {
-        return axios.put(QUESTIONNAIRE_API_BASE_URL + '/' + clientId, client);
+    updateQuestionnaire(questionnaire,questionnaireId) {
+        return axios.put(QUESTIONNAIRE_API_BASE_URL + '/' + questionnaireId, questionnaire);
     }
 
-    deleteQuestionnaire(clientId) {
-        return axios.delete(QUESTIONNAIRE_API_BASE_URL + '/' + clientId);
+    deleteQuestionnaire(questionnaireId) {
+        return axios.delete(QUESTIONNAIRE_API_BASE_URL + '/' + questionnaireId);
     }
 }
 

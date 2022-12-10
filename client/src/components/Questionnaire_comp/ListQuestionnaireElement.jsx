@@ -11,6 +11,7 @@ class ListQuestionnaireElement extends Component {
 
     this.state = {
       questionnaire: [],
+      inputText: "",
     };
     this.addQuestionnaire = this.addQuestionnaire.bind(this);
     this.editQuestionnaire = this.editQuestionnaire.bind(this);
@@ -46,10 +47,22 @@ class ListQuestionnaireElement extends Component {
     this.props.navigation("/add-questionnaire/_add");
   }
 
+  inputHandler = (e) => {
+    let lowerCase = e.target.value.toLowerCase();
+    this.setState({ inputText: lowerCase });
+  };
+
   render() {
     return (
       <div>
         <Container>
+        <input
+              className="form-control mt-4"
+              type="text"
+              id="outline-basic"
+              onChange={this.inputHandler}
+              value={this.state.inputText}
+            />
           <h2 className="text-center">Questionnaire List</h2>
           <div className="text-center mb-4">
             <button className="btn btn-dark" onClick={this.addQuestionnaire}>
@@ -68,7 +81,16 @@ class ListQuestionnaireElement extends Component {
                 </tr>
               </thead>
               <tbody className="text-center table-light">
-                {this.state.questionnaire.map((questionnaire) => (
+                {this.state.questionnaire
+                .filter((questionnaire) => {
+                  if (this.state.inputText === "") {
+                    return questionnaire;
+                  } else {
+                    return questionnaire.name_questionnaire
+                      .toLowerCase()
+                      .includes(this.state.inputText.toLowerCase());
+                  }
+                }).map((questionnaire) => (
                   <tr key={questionnaire.id_questionnaire}>
                     <td> {questionnaire.name_questionnaire} </td>
                     <td> {questionnaire.sex}</td>
